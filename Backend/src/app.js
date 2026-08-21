@@ -6,8 +6,22 @@ const app = express()
 
 app.use(express.json())
 app.use(cookieParser())
+
+const allowedOrigins = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://job-readyai.vercel.app" // <-- yaha apna ASLI Vercel URL daalo
+]
+
 app.use(cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: function (origin, callback) {
+        // no origin = curl/postman/server-to-server, allow it
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true)
+        } else {
+            callback(new Error("Not allowed by CORS"))
+        }
+    },
     credentials: true
 }))
 
