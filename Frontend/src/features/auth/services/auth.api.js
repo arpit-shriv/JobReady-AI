@@ -16,7 +16,6 @@ function getErrorMessage(err, fallback) {
     return "Unable to connect to the server. Please check your internet connection and try again."
 }
 
-
 export async function register({ username, email, password }) {
 
     try {
